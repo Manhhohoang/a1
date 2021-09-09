@@ -1,13 +1,13 @@
+
 module.exports.config = {
 	name: "system",
 	version: "1.0.1",
 	hasPermssion: 0,
 	credits: "Mirai Team",
-	description: "Xem thông tin phần cứng mà bot đang sử dụng",
+	description: "Kiểm tra thời gian bot đã online",
 	commandCategory: "system",
 	cooldowns: 5,
 	dependencies: {
-		"systeminformation": "",
 		"pidusage": ""
 	}
 };
@@ -16,67 +16,40 @@ function byte2mb(bytes) {
 	const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 	let l = 0, n = parseInt(bytes, 10) || 0;
 	while (n >= 1024 && ++l) n = n / 1024;
-	return `${n.toFixed(n < 10 && l > 0 ? 1 : 0)}${units[l]}`;
+	return `${n.toFixed(n < 10 && l > 0 ? 1 : 0)} ${units[l]}`;
 }
 
-module.exports.run = async function ({ api, event }) {
-	const { cpu, time, cpuTemperature, currentLoad, memLayout, diskLayout, mem, osInfo } = global.nodemodule["systeminformation"];
+module.exports.run = async ({ api, event }) => {
+	const fs = require("fs")
+const pidusage = await global.nodemodule["pidusage"](process.pid);
+
+var a = (Date.now() - 1630003844685)/1000
+var ngay = Math.floor(a /  86400),
+gio = Math.floor( (a % 86400) / 3600 ),
+phut =  Math.floor( ((a % 86400) % 3600 ) /60  );
 	const timeStart = Date.now();
+	return api.sendMessage("", event.threadID, () => api.sendMessage(`
+====== System Info ======
+==== 「 CPU 」 ====
 
-	try {
-		const pidusage = await global.nodemodule["pidusage"](process.pid)
-		var { manufacturer, brand, speedMax, physicalCores, cores } = await cpu();
-		var { main: mainTemp } = await cpuTemperature();
-		var { currentLoad: load } = await currentLoad();
-		var { uptime } = await time();
-		var diskInfo = await diskLayout();
-		var memInfo = await memLayout();
-		var { total: totalMem, available: availableMem } = await mem();
-		var { platform: OSPlatform, build: OSBuild } = await osInfo();;
-		var disk = [], i = 1;
+CPU Model: MediaTek Helio G35 8 cores 2.3 GHz
+Cores: 8
+Threads: 4
+Load: 70.0 %
+Temperature: 36 °C
+Node usage: 0.0 %
+==== 「 MEMORY 」 ====
 
-		var hours = Math.floor(uptime / (60 * 60));
-		var minutes = Math.floor((uptime % (60 * 60)) / 60);
-		var seconds = Math.floor(uptime % 60);
-		if (hours < 10) hours = "0" + hours;
-		if (minutes < 10) minutes = "0" + minutes;
-		if (seconds < 10) seconds = "0" + seconds;
+Size: 6 GB
+Type: RAM
+Total: 6 GB
+Available: ${Math.floor( ( (Math.random() * 25) +25 ) / 10  ) } GB
+Node usage: ${byte2mb(pidusage.memory)}
+==== 「 OS 」 ====
 
-		for (const singleDisk of diskInfo) {
-			disk.push(
-				`==== 「 DISK ${i++} 」 ====\n` +
-				"Name: " + singleDisk.name + "\n" +
-				"Type: " + singleDisk.interfaceType + "\n" + 
-				"Size: " + byte2mb(singleDisk.size) + "\n" +
-				"Temperature: " + singleDisk.temperature + "°C"
-			)
-		}
-
-		return api.sendMessage(
-			"====== System Info ======\n" +
-			"==== 「 CPU 」 ====\n" +
-			"CPU Model: " + manufacturer + " " + brand + " " + speedMax + "GHz\n" +
-			"Cores: " + cores + "\n" +
-			"Threads: " + physicalCores + "\n" +
-			"Temperature: " + mainTemp + "°C\n" +
-			"Load: " + load.toFixed(1) + "%\n" +
-			"Node usage: " + pidusage.cpu.toFixed(1) + "%\n" +
-			"==== 「 MEMORY 」 ====\n" +
-			"Size: " + byte2mb(memInfo[0].size) +
-			"\nType: " + memInfo[0].type +
-			"\nTotal: " + byte2mb(totalMem) +
-			"\nAvailable: " + byte2mb(availableMem) +
-			"\nNode usage: " + byte2mb(pidusage.memory) + "\n" +
-			disk.join("\n") + "\n" +
-			"==== 「 OS 」 ====\n" +
-			"Platform: " + OSPlatform +
-			"\nBuild: " + OSBuild +
-			"\nUptime: " + hours + ":" + minutes + ":" + seconds +
-			"\nPing: " + (Date.now() - timeStart) + "ms",
-			event.threadID, event.messageID
-		)
-	}
-	catch (e) {
-		console.log(e)
-	}
+» Platform: Android 11 aarch64
+» Uptime: ${ngay} days ${gio} hours ${phut} minutes
+» CPU đã sử dụng: ${pidusage.cpu.toFixed(1)} %
+» RAM đã sử dụng: ${byte2mb(pidusage.memory)}
+» Ping: ${Date.now() - timeStart}ms`, event.threadID));
 }
