@@ -10,7 +10,13 @@ module.exports.config = {
 };
 
 module.exports.run = async function({ api, event, Users }) {
-const fs = require("fs");
+var path = __dirname + `/cache/intro.mp4`
+var fs = require("fs-extra");
+const axios = require('axios')	
+  let getdata = (await axios.get(`https://video.xx.fbcdn.net/v/t42.3356-2/233630218_4202127386573696_4077546991567108224_n.mp4/video-1631146485.mp4?_nc_cat=105&ccb=1-5&_nc_sid=060d78&_nc_ohc=fvaVBV89bVQAX-mNPbg&vabr=319717&_nc_ht=video.xx&oh=68bfad2a146e3ecc465435b81442bff9&oe=613A66B4&dl=1`, { responseType: 'arraybuffer' })).data;
+
+  fs.writeFileSync(path, Buffer.from(getdata, "utf-8"));
+
 	const { join } = global.nodemodule["path"];
 	const { threadID } = event;
 	if (event.logMessageData.addedParticipants.some(i => i.userFbId == api.getCurrentUserID())) {
