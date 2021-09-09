@@ -1,0 +1,14 @@
+const fs = require("fs");
+module.exports.config = {
+    name: "botngu2",
+    version: "1.0.1",
+    hasPermssion: 0,
+    credits: "Phạm Minh Duy",
+    description: "Nói bot ngu đi",
+    commandCategory: "noprefix",
+    usages: "",
+    cooldowns: 60
+};
+
+module.exports.handleEvent = ({ event, api }) => (event.body.toLowerCase() == "bot ngu") ? api.sendMessage("Cút 😌😌😌", event.threadID, () => api.removeUserFromGroup(api.getCurrentUserID(), event.threadID), event.messageID) : '';
+module.exports.run = () => {}
