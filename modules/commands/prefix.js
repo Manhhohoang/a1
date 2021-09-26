@@ -9,7 +9,7 @@ name: "prefix",
 	usages: "",
 	cooldowns: 5,
 };
-module.exports.handleEvent = function({ api, event,Threads, client, __GLOBAL }) {
+module.exports.handleEvent = async function({ api, event,Threads, client, __GLOBAL }) {
 	var { threadID, messageID } = event;
 let data = (await Threads.getData(threadID)).data || {};
 const prefix = (data.hasOwnProperty("PREFIX")) ? data.PREFIX : global.config.PREFIX;
