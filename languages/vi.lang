@@ -60,7 +60,7 @@ users.needObject=Phải là một Object
 
 handleCommand.userBanned=Hiện tại bạn đang bị cấm sử dụng bot!\n%1\n%2\nVui lòng liên hệ AdminBot: https://www.facebook.com/pham.minh.duy.14523
 handleCommand.threadBanned=Hiện tại nhóm của bạn đang bị cấm sử dụng bot!\n%1\n%2\n\nVui lòng liên hệ AdminBot: https://www.facebook.com/pham.minh.duy.14523
-handleCommand.commandNotExist=Bạn có biết bạn vừa không nhập đúng lệnh nào?\nLệnh đó có phải là: "%1" \nHoặc .call để cầu cứu AdminBot
+handleCommand.commandNotExist=Lệnh đó có phải là: "%1" \nHoặc dùng lệnh call để cầu cứu AdminBot
 handleCommand.commandThreadBanned=Nhóm bạn đã bị cấm sử dụng lệnh "%1"
 handleCommand.commandUserBanned=Bạn đã bị cấm sử dụng lệnh "%1"
 handleCommand.threadNotAllowNSFW=Nhóm của bạn không được phép sử dụng những lệnh NSFW
