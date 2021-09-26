@@ -39,6 +39,6 @@ const fs = require("fs");
 	const pidusage = await global.nodemodule["pidusage"](process.pid);
 
 	const timeStart = Date.now();
-	return api.sendMessage("", event.threadID, () => api.sendMessage({body: getText("returnResult", hours, minutes, seconds, global.data.allUserID.length, global.data.allThreadID.length, pidusage.cpu.toFixed(1), byte2mb(pidusage.memory), Date.now() - timeStart, tie), attachment: fs.createReadStream(__dirname + `/cache/video.mp4`)
+	return api.sendMessage("", event.threadID, () => api.sendMessage({body: getText("returnResult", hours, minutes, seconds, global.data.allUserID.length, global.data.allThreadID.length, pidusage.cpu.toFixed(1), byte2mb(pidusage.memory), Date.now() - timeStart, tie), attachment: fs.createReadStream(__dirname + `/cache/video1.mp4`)
 			}, event.threadID, event.messageID));
 }
