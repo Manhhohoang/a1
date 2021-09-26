@@ -54,7 +54,7 @@ module.exports.makeRankCard = async (data) => {
 	var expWidth = (expCurrent * 615) / expNextLevel;
 	if (expWidth > 615 - 18.5) expWidth = 615 - 18.5;
 	
-	let avatar = await request.get(`https://graph.facebook.com/${id}/picture?width=512&height=512&access_token=${global.configModule[this.config.name].APIKEY}`);
+	let avatar = await request.get(`https://graph.facebook.com/${id}/picture?height=720&width=720&access_token=170440784240186|bc82258eaaf93ee5b9f577a8d401bfc9`);
 
 	avatar = await this.circle(avatar.body);
 
