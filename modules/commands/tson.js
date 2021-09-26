@@ -1,5 +1,5 @@
 module.exports.config = {
-  name: "tson",
+  name: "hue",
   version: "1.0.0", 
   hasPermssion: 0,
   credits: "Phạm Minh Duy",
